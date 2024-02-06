@@ -117,26 +117,30 @@ workflow humanwgs {
 		Array[IndexData] merged_haplotagged_bam = sample_analysis.merged_haplotagged_bam
 		Array[File] haplotagged_bam_mosdepth_summary = sample_analysis.haplotagged_bam_mosdepth_summary
 		Array[File] haplotagged_bam_mosdepth_region_bed = sample_analysis.haplotagged_bam_mosdepth_region_bed
-		
-		# per sample trgt outputs
-		Array[IndexData] trgt_spanning_reads = sample_analysis.trgt_spanning_reads
-		Array[IndexData] trgt_repeat_vcf = sample_analysis.trgt_repeat_vcf
-		Array[File] trgt_dropouts = sample_analysis.trgt_dropouts
+
+		# ## Don't have required input files for GRCh37 and CHM13, only GRCh38 - optional
+		# # per sample trgt outputs
+		# Array[IndexData]? trgt_spanning_reads = sample_analysis.trgt_spanning_reads
+		# Array[IndexData]? trgt_repeat_vcf = sample_analysis.trgt_repeat_vcf
+		# Array[File]? trgt_dropouts = sample_analysis.trgt_dropouts
 
 		# per sample cpg outputs
 		Array[Array[File]] cpg_pileup_beds = sample_analysis.cpg_pileup_beds
 		Array[Array[File]] cpg_pileup_bigwigs = sample_analysis.cpg_pileup_bigwigs
 
+		## Requires additional argument for use with GRCh37, does not currently work on CHM13  - optional
 		# per sample paraphase outputs
-		Array[File] paraphase_output_jsons = sample_analysis.paraphase_output_json
-		Array[IndexData] paraphase_realigned_bams = sample_analysis.paraphase_realigned_bam
-		Array[Array[File]] paraphase_vcfs = sample_analysis.paraphase_vcfs
+		Array[File?] paraphase_output_jsons = sample_analysis.paraphase_output_json
+		Array[File?] paraphase_realigned_bams = sample_analysis.paraphase_realigned_bam
+		Array[File?] paraphase_realigned_bam_indexes = sample_analysis.paraphase_realigned_bam_index
+		Array[Array[File]?] paraphase_vcfs = sample_analysis.paraphase_vcfs
 
-		# per sample hificnv outputs
-		Array[IndexData] hificnv_vcfs = sample_analysis.hificnv_vcf
-		Array[File] hificnv_copynum_bedgraphs = sample_analysis.hificnv_copynum_bedgraph
-		Array[File] hificnv_depth_bws = sample_analysis.hificnv_depth_bw
-		Array[File] hificnv_maf_bws = sample_analysis.hificnv_maf_bw
+		# ## Don't have required input files for GRCh37 and CHM13, only GRCh38 - optional
+		# # per sample hificnv outputs
+		# Array[IndexData]? hificnv_vcfs = sample_analysis.hificnv_vcf
+		# Array[File?] hificnv_copynum_bedgraphs = sample_analysis.hificnv_copynum_bedgraph
+		# Array[File?] hificnv_depth_bws = sample_analysis.hificnv_depth_bw
+		# Array[File?] hificnv_maf_bws = sample_analysis.hificnv_maf_bw
 
 		# cohort_analysis output
 		IndexData? cohort_sv_vcf = cohort_analysis.phased_joint_sv_vcf

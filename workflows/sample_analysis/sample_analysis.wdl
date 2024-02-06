@@ -134,26 +134,30 @@ workflow sample_analysis {
 			runtime_attributes = default_runtime_attributes
 	}
 
-	call trgt {
-		input:
-			sample_id = sample.sample_id,
-			sex = sample.sex,
-			bam = haplotagged_bam,
-			bam_index = haplotagged_bam_index,
-			reference = reference.fasta.data,
-			reference_index = reference.fasta.data_index,
-			tandem_repeat_bed = reference.trgt_tandem_repeat_bed,
-			runtime_attributes = default_runtime_attributes
-	}
+	# ## Only running in trgt tandem repeat bed file is defined in input.json
+	# ## trgt tandem repeat bed is a reference specific bed file with known TR coordinates and motifs
+	# if (defined(reference.trgt_tandem_repeat_bed)){
+	# 	call trgt {
+	# 		input:
+	# 			sample_id = sample.sample_id,
+	# 			sex = sample.sex,
+	# 			bam = haplotagged_bam,
+	# 			bam_index = haplotagged_bam_index,
+	# 			reference = reference.fasta.data,
+	# 			reference_index = reference.fasta.data_index,
+	# 			tandem_repeat_bed = reference.trgt_tandem_repeat_bed,
+	# 			runtime_attributes = default_runtime_attributes
+	# 	}
 
-	call coverage_dropouts {
-		input:
-			bam = haplotagged_bam,
-			bam_index = haplotagged_bam_index,
-			tandem_repeat_bed = reference.trgt_tandem_repeat_bed,
-			output_prefix = "~{sample.sample_id}.~{reference.name}",
-			runtime_attributes = default_runtime_attributes
-	}
+	# 	call coverage_dropouts {
+	# 		input:
+	# 			bam = haplotagged_bam,
+	# 			bam_index = haplotagged_bam_index,
+	# 			tandem_repeat_bed = reference.trgt_tandem_repeat_bed,
+	# 			output_prefix = "~{sample.sample_id}.~{reference.name}",
+	# 			runtime_attributes = default_runtime_attributes
+	# 	}
+	# }
 
 	call cpg_pileup {
 		input:
@@ -165,34 +169,39 @@ workflow sample_analysis {
 			runtime_attributes = default_runtime_attributes
 	}
 
-	call paraphase {
-		input:
-			sample_id = sample.sample_id,
-			bam = haplotagged_bam,
-			bam_index = haplotagged_bam_index,
-			reference = reference.fasta.data,
-			reference_index = reference.fasta.data_index,
-			out_directory = "~{sample.sample_id}.paraphase",
-			runtime_attributes = default_runtime_attributes
+	if (reference.name == "GRCh38"){
+		call paraphase {
+			input:
+				sample_id = sample.sample_id,
+				bam = haplotagged_bam,
+				bam_index = haplotagged_bam_index,
+				reference = reference.fasta.data,
+				reference_index = reference.fasta.data_index,
+				out_directory = "~{sample.sample_id}.paraphase",
+				runtime_attributes = default_runtime_attributes
+		}
 	}
 
-	call hificnv {
-		input:
-			sample_id = sample.sample_id,
-			sex = sample.sex,
-			bam = haplotagged_bam,
-			bam_index = haplotagged_bam_index,
-			phased_vcf = hiphase.phased_vcfs[0].data,
-			phased_vcf_index = hiphase.phased_vcfs[0].data_index,
-			reference = reference.fasta.data,
-			reference_index = reference.fasta.data_index,
-			exclude_bed = reference.hificnv_exclude_bed.data,
-			exclude_bed_index = reference.hificnv_exclude_bed.data_index,
-			expected_bed_male = reference.hificnv_expected_bed_male,
-			expected_bed_female = reference.hificnv_expected_bed_female,
-			output_prefix = "hificnv",
-			runtime_attributes = default_runtime_attributes
-	}
+	## Intial for conditionally running hificnv - code does not work need to debug
+	# if (defined(reference.hificnv_exclude_bed) && defined(reference.hificnv_expected_bed_male) && defined(reference.hificnv_expected_bed_female)){
+		# call hificnv {
+		# 	input:
+		# 		sample_id = sample.sample_id,
+		# 		sex = sample.sex,
+		# 		bam = haplotagged_bam,
+		# 		bam_index = haplotagged_bam_index,
+		# 		phased_vcf = hiphase.phased_vcfs[0].data,
+		# 		phased_vcf_index = hiphase.phased_vcfs[0].data_index,
+		# 		reference = reference.fasta.data,
+		# 		reference_index = reference.fasta.data_index,
+		# 		exclude_bed = reference.hificnv_exclude_bed.data,
+		# 		exclude_bed_index = reference.hificnv_exclude_bed.data_index,
+		# 		expected_bed_male = reference.hificnv_expected_bed_male,
+		# 		expected_bed_female = reference.hificnv_expected_bed_female,
+		# 		output_prefix = "hificnv",
+		# 		runtime_attributes = default_runtime_attributes
+		# }
+	# }
 
 	output {
 		# per movie stats, alignments, and svsigs
@@ -220,24 +229,26 @@ workflow sample_analysis {
 		File haplotagged_bam_mosdepth_region_bed = mosdepth.region_bed
 
 		# per sample trgt outputs
-		IndexData trgt_spanning_reads = {"data": trgt.spanning_reads, "data_index": trgt.spanning_reads_index}
-		IndexData trgt_repeat_vcf = {"data": trgt.repeat_vcf, "data_index": trgt.repeat_vcf_index}
-		File trgt_dropouts = coverage_dropouts.trgt_dropouts
+		# IndexData? trgt_spanning_reads = {"data": trgt.spanning_reads, "data_index": trgt.spanning_reads_index}
+		# IndexData? trgt_repeat_vcf = {"data": trgt.repeat_vcf, "data_index": trgt.repeat_vcf_index}
+		# File? trgt_dropouts = coverage_dropouts.trgt_dropouts
 
 		# per sample cpg outputs
 		Array[File] cpg_pileup_beds = cpg_pileup.pileup_beds
 		Array[File] cpg_pileup_bigwigs = cpg_pileup.pileup_bigwigs
 
 		# per sample paraphase outputs
-		File paraphase_output_json = paraphase.output_json
-		IndexData paraphase_realigned_bam = {"data": paraphase.realigned_bam, "data_index": paraphase.realigned_bam_index}
-		Array[File] paraphase_vcfs = paraphase.paraphase_vcfs
+		File? paraphase_output_json = paraphase.output_json
+		File? paraphase_realigned_bam = paraphase.realigned_bam
+		File? paraphase_realigned_bam_index = paraphase.realigned_bam_index
+		Array[File]? paraphase_vcfs = paraphase.paraphase_vcfs
+
 
 		# per sample hificnv outputs
-		IndexData hificnv_vcf = {"data": hificnv.cnv_vcf, "data_index": hificnv.cnv_vcf_index}
-		File hificnv_copynum_bedgraph = hificnv.copynum_bedgraph
-		File hificnv_depth_bw = hificnv.depth_bw
-		File hificnv_maf_bw = hificnv.maf_bw
+		# IndexData? hificnv_vcf = {"data": hificnv.cnv_vcf, "data_index": hificnv.cnv_vcf_index}
+		# File? hificnv_copynum_bedgraph = hificnv.copynum_bedgraph
+		# File? hificnv_depth_bw = hificnv.depth_bw
+		# File? hificnv_maf_bw = hificnv.maf_bw
 	}
 
 	parameter_meta {
@@ -277,7 +288,7 @@ task pbmm2_align {
 			--sort-memory 4G \
 			--preset HIFI \
 			--sample ~{sample_id} \
-			--log-level INFO \
+			--log-level DEBUG \
 			--sort \
 			--unmapped \
 			~{reference} \
