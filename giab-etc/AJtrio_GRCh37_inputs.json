@@ -1,0 +1,61 @@
+{
+  "humanwgs.cohort": {
+    "cohort_id": "AJTrio",
+    "samples": [
+      {
+        "sample_id": "HG002",
+        "movie_bams": [
+          "/wrk/nolson/pacbio-hifi-20231031-AJTrio/HG002/m84039_230928_213653_s3.hifi_reads.default.bam",
+          "/wrk/nolson/pacbio-hifi-20231031-AJTrio/HG002/m84039_231005_222902_s1.hifi_reads.default.bam"
+        ],
+        "sex": "MALE",
+        "affected": false,
+        "father_id": "HG003",
+        "mother_id": "HG004"
+      },
+      {
+        "sample_id": "HG003",
+        "movie_bams": [
+          "/wrk/nolson/pacbio-hifi-20231031-AJTrio/HG003/m84039_230928_220759_s4.hifi_reads.default.bam",
+          "/wrk/nolson/pacbio-hifi-20231031-AJTrio/HG003/m84039_231006_220627_s2.hifi_reads.default.bam"
+        ],
+        "sex": "MALE",
+        "affected": false,
+        "father_id": "HG003",
+        "mother_id": "HG004"
+      },
+      {
+        "sample_id": "HG004",
+        "movie_bams": [
+          "/wrk/nolson/pacbio-hifi-20231031-AJTrio/HG004/m84039_230929_004333_s1.hifi_reads.default.bam",
+          "/wrk/nolson/pacbio-hifi-20231031-AJTrio/HG004/m84039_231006_223645_s3.hifi_reads.default.bam"
+        ],
+        "sex": "FEMALE",
+        "affected": false,
+        "father_id": "HG003",
+        "mother_id": "HG004"
+      }
+    ],
+    "phenotypes": [
+      "HP:0000001"
+    ]
+  },
+  "humanwgs.reference": {
+    "name": "GRCh37",
+    "fasta": {
+      "data": "/wrk/nolson/dataset/GRCh37/hs37d5.fa",
+      "data_index": "/wrk/nolson/dataset/GRCh37/hs37d5.fa.fai"
+    },
+    "pbsv_splits": "/wrk/nolson/dataset/GRCh37/hs37d5.pbsv_splits.json",
+    "tandem_repeat_bed": "/wrk/nolson/dataset/GRCh37/human_hs37d5.trf.bed",
+    "trgt_tandem_repeat_bed": "/wrk/nolson/dataset/GRCh38/trgt/human_GRCh38_no_alt_analysis_set.trgt.v0.3.4.bed",
+    "hificnv_exclude_bed": {
+      "data": "/wrk/nolson/dataset/GRCh38/hificnv/cnv.excluded_regions.common_50.hg38.bed.gz",
+      "data_index": "/wrk/nolson/dataset/GRCh38/hificnv/cnv.excluded_regions.common_50.hg38.bed.gz.tbi"
+    },
+    "hificnv_expected_bed_male": "/wrk/nolson/dataset/GRCh38/hificnv/expected_cn.hg38.XY.bed",
+    "hificnv_expected_bed_female": "/wrk/nolson/dataset/GRCh38/hificnv/expected_cn.hg38.XX.bed"
+  },
+  "humanwgs.backend": "HPC",
+  "humanwgs.preemptible": false
+}

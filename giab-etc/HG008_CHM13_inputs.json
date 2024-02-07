@@ -1,0 +1,45 @@
+{
+  "humanwgs.cohort": {
+    "cohort_id": "HG008",
+    "samples": [
+      {
+        "sample_id": "HG008-T",
+        "movie_bams": [
+          "/wrk/nolson/pacbio-hifi-20240125-HG008/PacBio_Revio_20240125/HG008-T/HG008-T_HiFi-Revio_m84039_240113_032943_s4.hifi_reads.bc2005.bam",
+          "/wrk/nolson/pacbio-hifi-20240125-HG008/PacBio_Revio_20240125/HG008-T/HG008-T_HiFi-Revio_m84039_240114_012401_s1.hifi_reads.bc2005.bam"
+        ],
+        "sex": "FEMALE",
+        "affected": false
+      },
+      {
+        "sample_id": "HG008-N-P",
+        "movie_bams": [
+          "/wrk/nolson/pacbio-hifi-20240125-HG008/PacBio_Revio_20240125/HG008-N-P/HG008-N-P_HiFi-Revio_m84039_240114_032308_s2.hifi_reads.bc2006.bam"
+        ],
+        "sex": "FEMALE",
+        "affected": false
+      }
+    ],
+    "phenotypes": [
+      "HP:0000001"
+    ]
+  },
+  "humanwgs.reference": {
+    "name": "CHM13",
+    "fasta": {
+      "data": "/wrk/nolson/dataset/CHM13/human_chm13v2p0_maskedY_rCRS.fasta",
+      "data_index": "/wrk/nolson/dataset/CHM13/human_chm13v2p0_maskedY_rCRS.fasta.fai"
+    },
+    "pbsv_splits": "/wrk/nolson/dataset/CHM13/human_chm13v2p0_maskedY_rCRS.pbsv_splits.json",
+    "tandem_repeat_bed": "/wrk/nolson/dataset/CHM13/human_chm13v2p0_maskedY_rCRS.trf.bed",
+    "trgt_tandem_repeat_bed": "/wrk/nolson/dataset/GRCh38/trgt/human_GRCh38_no_alt_analysis_set.trgt.v0.3.4.bed",
+    "hificnv_exclude_bed": {
+      "data": "/wrk/nolson/dataset/GRCh38/hificnv/cnv.excluded_regions.common_50.hg38.bed.gz",
+      "data_index": "/wrk/nolson/dataset/GRCh38/hificnv/cnv.excluded_regions.common_50.hg38.bed.gz.tbi"
+    },
+    "hificnv_expected_bed_male": "/wrk/nolson/dataset/GRCh38/hificnv/expected_cn.hg38.XY.bed",
+    "hificnv_expected_bed_female": "/wrk/nolson/dataset/GRCh38/hificnv/expected_cn.hg38.XX.bed"
+  },
+  "humanwgs.backend": "HPC",
+  "humanwgs.preemptible": false
+}
