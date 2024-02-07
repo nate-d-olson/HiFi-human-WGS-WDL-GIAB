@@ -10,13 +10,13 @@ PacBio has whole genome HiFi analysis pipelines for;
 Following setup used by ND Olson to run the germline pipeline. 
 
 
-GRCh38 implemented by PacBio, modified to work with GRCh37 and CHM13[^1].
+GRCh38 implemented by PacBio, modified to work with GRCh37 and CHM13 [^1].
 Germline pipeline was modified to run with multiple references, [GIAB-Germline](https://github.com/nate-d-olson/HiFi-human-WGS-WDL-GIAB).
 
 ## Steps
 
 1. Clone GIAB modified version of the pipeline [GIAB-Germline](https://github.com/nate-d-olson/HiFi-human-WGS-WDL-GIAB)
-1. [Getting input files(#getting-pipeline-input-files)
+1. [Getting input files](#getting-pipeline-input-files)
 1. [Setting up environment](#setting-up-environment)
 1. [Completing input config file](#completing-input-config)
 1. [Running pipeline](#running-pipeline)
@@ -260,14 +260,14 @@ Pipeline run takes about a day, due to user resource limits. These might be diff
 
 ## Footnotes
 
-[^1:] For GRCh37 and CHM13 the following tasks were commented out `hificnv`, `coverage_dropouts`, and `trgt`. `paraphrase` was modified to run conditionally based on reference name. May eventually modify `hificnv`, `coverage_dropouts`, and `trgt` to similarly run conditionally.
+[^1]: For GRCh37 and CHM13 the following tasks were commented out `hificnv`, `coverage_dropouts`, and `trgt`. `paraphrase` was modified to run conditionally based on reference name. May eventually modify `hificnv`, `coverage_dropouts`, and `trgt` to similarly run conditionally.
 
-[^2:] As of 2/7 not sure the gff reference files are used with the modified version of the pipeline. 
+[^2]: As of 2/7 not sure the gff reference files are used with the modified version of the pipeline. 
 
-[^3:] Reference data is hosted on Zenodo at [10.5281/zenodo.8415406](https://zenodo.org/record/8415406).  Download the reference data bundle and extract it to a location on your HPC, then update the input template file with the path to the reference data.
+[^3]: Reference data is hosted on Zenodo at [10.5281/zenodo.8415406](https://zenodo.org/record/8415406).  Download the reference data bundle and extract it to a location on your HPC, then update the input template file with the path to the reference data.
 
-[^4:] See PacBio WDL backend HPC documentation for additional information, [https://github.com/PacificBiosciences/HiFi-human-WGS-WDL/tree/main/backends/hpc](https://github.com/PacificBiosciences/HiFi-human-WGS-WDL/tree/main/backends/hpc)
+[^4]: See PacBio WDL backend HPC documentation for additional information, [https://github.com/PacificBiosciences/HiFi-human-WGS-WDL/tree/main/backends/hpc](https://github.com/PacificBiosciences/HiFi-human-WGS-WDL/tree/main/backends/hpc)
 
-[^5:] NDO modified `[slurm]` section to `extra_args="--partition batch --comment 'run with miniwdl' --time=3-00:00:00"`, for nisaba, not sure modification necessary but without the `--time` the pipeline was failing for me.
+[^5]: NDO modified `[slurm]` section to `extra_args="--partition batch --comment 'run with miniwdl' --time=3-00:00:00"`, for nisaba, not sure modification necessary but without the `--time` the pipeline was failing for me.
 
-[^6:] NDO using absolute paths, relative paths better for reproducibility but I was lazy and used absolute paths when I was just trying to get the pipeline to run.
+[^6]: NDO using absolute paths, relative paths better for reproducibility but I was lazy and used absolute paths when I was just trying to get the pipeline to run.
